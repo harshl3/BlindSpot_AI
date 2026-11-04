@@ -25,7 +25,7 @@ public class FirebaseAuthService {
     private final String projectId;
     private final JwkProvider jwkProvider;
 
-    public FirebaseAuthService(@Value("${firebase.project-id:promptwars-db2f0}") String projectId) {
+    public FirebaseAuthService(@Value("${firebase.project-id:}") String projectId) {
         this.projectId = projectId;
         try {
             this.jwkProvider = new UrlJwkProvider(URI.create(FIREBASE_JWKS_URL).toURL());

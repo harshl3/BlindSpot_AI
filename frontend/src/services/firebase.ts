@@ -16,15 +16,15 @@ import {
   deleteDecisionFromBackend
 } from "./api";
 
-// Firebase web configuration (safe public client keys for Auth)
+// Firebase web configuration (loaded from environment)
 export const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyBK_KzCjbeWX4rP3xD33QYjvWINS49U_XQ",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "promptwars-db2f0.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "promptwars-db2f0",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "promptwars-db2f0.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "236786444201",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:236786444201:web:0a313b32061ec79eef86b8",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-8536JD419F"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ""
 };
 
 // Singleton App initialization

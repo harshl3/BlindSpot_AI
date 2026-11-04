@@ -116,10 +116,10 @@ export const AuditReportModal: React.FC<AuditReportModalProps> = ({ isOpen, onCl
             </div>
             <div>
               <h2 id="audit-modal-title" className="text-lg font-bold font-heading">
-                PromptWars 2026 — Evaluator Criteria Audit
+                BlindSpot AI — Production Readiness & Architecture Audit
               </h2>
               <p className="text-xs text-stone-400">
-                Independent verification against all 7 official competition categories
+                Independent verification against all 7 core production criteria
               </p>
             </div>
           </div>
@@ -170,7 +170,7 @@ export const AuditReportModal: React.FC<AuditReportModalProps> = ({ isOpen, onCl
         {/* Footer */}
         <div className="px-6 py-4 bg-stone-50 dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between">
           <span className="text-xs text-stone-500 dark:text-stone-400">
-            BlindSpot v1.2.0 • PromptWars 2026 Production Build
+            BlindSpot AI v1.2.0 • Production Build
           </span>
           <button
             onClick={onClose}
