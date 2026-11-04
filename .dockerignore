@@ -1,0 +1,16 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+target/
+backend/target/
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.tools/
+.idea/
+.vscode/
+*.log
+
