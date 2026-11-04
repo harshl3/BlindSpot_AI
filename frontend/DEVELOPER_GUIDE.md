@@ -206,49 +206,6 @@ Runs a live `{ ping: 1 }` command on MongoDB Atlas.
 }
 ```
 
----
-
-## 4. Configuration & Environment Variables
-
-### Backend Configuration (`backend/src/main/resources/application.yml`)
-```yaml
-server:
-  port: ${SERVER_PORT:8080}
-
-spring:
-  application:
-    name: blindspot-backend
-  data:
-    mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb+srv://harshalmendhule3:harshal2005@cluster0.qmxfmkj.mongodb.net/blindspot_db?retryWrites=true&w=majority}
-      database: ${SPRING_DATA_MONGODB_DATABASE:blindspot_db}
-      auto-index-creation: true
-
-gemini:
-  api-key: ${GEMINI_API_KEY:}
-  models: ${GEMINI_MODELS:gemini-3.5-flash-lite,gemini-flash-lite-latest,gemini-3.8-flash,gemini-3.5-flash}
-
-firebase:
-  project-id: ${FIREBASE_PROJECT_ID:promptwars-db2f0}
-
-cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://localhost:8080}
-```
-
-### Frontend Configuration (`BlindSpot AI/.env`)
-```bash
-# Firebase Client Config (Safe for public bundle)
-VITE_FIREBASE_API_KEY=AIzaSyBK_KzCjbeWX4rP3xD33QYjvWINS49U_XQ
-VITE_FIREBASE_AUTH_DOMAIN=promptwars-db2f0.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=promptwars-db2f0
-VITE_FIREBASE_STORAGE_BUCKET=promptwars-db2f0.firebasestorage.app
-VITE_FIREBASE_MESSAGING_SENDER_ID=236786444201
-VITE_FIREBASE_APP_ID=1:236786444201:web:0a313b32061ec79eef86b8
-VITE_FIREBASE_MEASUREMENT_ID=G-8536JD419F
-
-# Optional Backend URL (defaults to http://localhost:8080 via Vite proxy)
-VITE_BACKEND_URL=http://localhost:8080
-```
 
 ---
 
