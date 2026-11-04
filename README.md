@@ -2,15 +2,27 @@
 
 > **AI-powered cognitive decision partner** that uncovers unstated assumptions, flags overlooked risks, stress-tests ideas, and simulates failure modes — **in clear, simple language without ever deciding for you.**
 
+[![Live Web App](https://img.shields.io/badge/Render-Live%20Frontend-success.svg?style=flat-square&logo=render)](https://blindspot-ai-t1bn.onrender.com)
+[![Live Backend API](https://img.shields.io/badge/Render-Live%20Backend-blue.svg?style=flat-square&logo=render)](https://blindspot-backend-qb8r.onrender.com/api/health)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-BlindSpot__AI-181717.svg?style=flat-square&logo=github)](https://github.com/harshl3/BlindSpot_AI)
 [![Java 21](https://img.shields.io/badge/Java-21-orange.svg?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.2-brightgreen.svg?style=flat-square&logo=springboot)](https://spring.io/projects/spring-boot)
 [![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-blindspot__db-47A248.svg?style=flat-square&logo=mongodb)](https://www.mongodb.com/atlas)
 [![Google Gemini AI](https://img.shields.io/badge/Google%20Gemini-3.5%20Flash%20Lite-4285F4.svg?style=flat-square&logo=google)](https://ai.google.dev/)
 [![React 19](https://img.shields.io/badge/React-19.x-61DAFB.svg?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.x-646CFF.svg?style=flat-square&logo=vite)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-38B2AC.svg?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
-[![Firebase Auth](https://img.shields.io/badge/Firebase%20Auth-Google%20Sign--In-FFCA28.svg?style=flat-square&logo=firebase)](https://firebase.google.com/)
+
+---
+
+## 🌐 Live Production Deployments & Health Endpoints
+
+| Resource | Direct Link | Type & Purpose |
+| :--- | :--- | :--- |
+| **Frontend Web App** | [https://blindspot-ai-t1bn.onrender.com](https://blindspot-ai-t1bn.onrender.com) | **User-Facing UI**: React 19 SPA running on Render CDN |
+| **Backend REST Service** | [https://blindspot-backend-qb8r.onrender.com](https://blindspot-backend-qb8r.onrender.com) | **Core API**: Spring Boot 3.4 (Java 21) Docker Web Service |
+| **Backend Health Check** | [`/api/health`](https://blindspot-backend-qb8r.onrender.com/api/health) | **Service Diagnostic**: Verifies server status, uptime & Gemini readiness |
+| **Database Health Check** | [`/api/decisions/db-health`](https://blindspot-backend-qb8r.onrender.com/api/decisions/db-health) | **Persistence Diagnostic**: Verifies live MongoDB Atlas cluster connectivity |
+| **GitHub Source Code** | [https://github.com/harshl3/BlindSpot_AI](https://github.com/harshl3/BlindSpot_AI) | **Source Repository**: Clean monorepo with `frontend/` and `backend/` |
 
 ---
 
@@ -244,16 +256,18 @@ Open `http://localhost:5173` in your browser.
 
 ## 📡 API Endpoints Reference
 
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :---: |
-| `GET` | `/api/health` | Service health, Gemini readiness, and timestamp | No |
-| `POST` | `/api/analyze` | Generates 8-section BlindSpot analysis report | No |
-| `POST` | `/api/challenge` | Generates stress-test counter-arguments | No |
-| `POST` | `/api/premortem` | Simulates a future failure scenario | No |
-| `GET` | `/api/decisions` | Retrieves user-scoped decision history | Token or Session |
-| `POST` | `/api/decisions` | Saves decision and reflection to MongoDB Atlas | Token or Session |
-| `DELETE` | `/api/decisions/{id}`| Deletes decision owned by current user | Token or Session |
-| `GET` | `/api/decisions/db-health` | Diagnostic ping verifying MongoDB connection | No |
+Base Backend URL: `https://blindspot-backend-qb8r.onrender.com`
+
+| Method | Endpoint | Description | Live Health Link | Auth Required |
+| :--- | :--- | :--- | :--- | :---: |
+| `GET` | `/api/health` | Service health, Gemini readiness & uptime | [Test in Browser](https://blindspot-backend-qb8r.onrender.com/api/health) | No |
+| `POST` | `/api/analyze` | Generates 8-section BlindSpot analysis report | — | No |
+| `POST` | `/api/challenge` | Generates stress-test counter-arguments | — | No |
+| `POST` | `/api/premortem` | Simulates a future failure scenario | — | No |
+| `GET` | `/api/decisions` | Retrieves user-scoped decision history | — | Token / Session |
+| `POST` | `/api/decisions` | Saves decision and reflection to MongoDB Atlas | — | Token / Session |
+| `DELETE` | `/api/decisions/{id}`| Deletes decision owned by current user | — | Token / Session |
+| `GET` | `/api/decisions/db-health` | Diagnostic ping verifying MongoDB connection | [Test in Browser](https://blindspot-backend-qb8r.onrender.com/api/decisions/db-health) | No |
 
 ---
 

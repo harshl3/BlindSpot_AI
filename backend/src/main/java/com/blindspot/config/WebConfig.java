@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final List<String> allowedOrigins;
 
     public WebConfig(
-            @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:3000,http://localhost:8080,https://*.onrender.com}") 
+            @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:3000,http://localhost:8080,https://blindspot-ai-t1bn.onrender.com,https://*.onrender.com}") 
             String allowedOriginsStr) {
         this.allowedOrigins = Arrays.stream(allowedOriginsStr.split(","))
                 .map(String::trim)
