@@ -37,7 +37,7 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
   );
   const [priorities, setPriorities] = useState(initialValues?.priorities || "");
   const [currentThinking, setCurrentThinking] = useState(initialValues?.currentThinking || "");
-  
+
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -108,7 +108,7 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
   return (
     <section className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8" aria-labelledby="workspace-heading">
       <div className="glass-panel rounded-3xl p-6 sm:p-10 space-y-6 shadow-2xl">
-        
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-indigo-100/60 dark:border-stone-800">
           <div>
@@ -170,7 +170,7 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
 
         {/* Main Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-          
+
           {/* Primary Decision Input Box */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -179,7 +179,7 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
               </label>
               <span className="text-[11px] text-stone-400">Be as specific as possible</span>
             </div>
-            
+
             <textarea
               id="decision-query"
               rows={3}
@@ -189,11 +189,10 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
                 if (errors.decision) setErrors((prev) => ({ ...prev, decision: "" }));
               }}
               placeholder="e.g. Should I accept the founding engineer role at a Series A startup or stay as Senior SWE at Google?"
-              className={`w-full px-4 py-3 rounded-2xl glass-card-indigo text-stone-900 dark:text-white placeholder:text-stone-400 dark:placeholder:text-stone-500 text-sm sm:text-base font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500 transition-all resize-y ${
-                errors.decision ? "border-red-500" : ""
-              }`}
+              className={`w-full px-4 py-3 rounded-2xl glass-card-indigo text-stone-900 dark:text-white placeholder:text-stone-400 dark:placeholder:text-stone-500 text-sm sm:text-base font-medium focus:outline-hidden focus:ring-2 focus:ring-indigo-500 transition-all resize-y ${errors.decision ? "border-red-500" : ""
+                }`}
             />
-            
+
             {errors.decision && (
               <p className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                 <AlertCircle className="w-3.5 h-3.5" />
@@ -218,7 +217,7 @@ export const DecisionWorkspace: React.FC<DecisionWorkspaceProps> = ({
           {/* Optional Extended Details Drawer */}
           {showAdvanced && (
             <div className="space-y-4 pt-2 border-t border-stone-100 dark:border-stone-800 animate-in fade-in duration-200">
-              
+
               {/* Options Considered */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
