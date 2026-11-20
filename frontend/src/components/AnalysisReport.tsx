@@ -16,7 +16,8 @@ import {
   CheckCircle2,
   Loader2,
   BookOpen,
-  Filter
+  Filter,
+  ArrowRight
 } from "lucide-react";
 import type { BlindSpotAnalysis, DecisionInput } from "../types/decision";
 import { CognitiveRadarGraph } from "./CognitiveRadarGraph";
@@ -57,6 +58,30 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
   const toggleSection = (id: string) => {
     setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleSetSkimMode = () => {
+    setViewMode("skim");
+    setCollapsed({
+      assumptions: false,
+      blindSpots: false,
+      risks: false,
+      perspectives: true,
+      questions: true,
+      evidenceGaps: true
+    });
+  };
+
+  const handleSetDetailedMode = () => {
+    setViewMode("detailed");
+    setCollapsed({
+      assumptions: false,
+      blindSpots: false,
+      risks: false,
+      perspectives: false,
+      questions: false,
+      evidenceGaps: false
+    });
   };
 
   const expandAll = () => {
@@ -227,35 +252,33 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
       {/* READING MODE & NAVIGATION CONTROLS */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-stone-100 dark:bg-stone-800/60 border border-stone-200/80 dark:border-stone-700/80 text-xs">
         {/* Mode Switcher */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-stone-500 dark:text-stone-400 font-semibold mr-1">Read Mode:</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-stone-500 dark:text-stone-400 font-semibold mr-0.5">Read Mode:</span>
           <button
-            onClick={() => {
-              setViewMode("skim");
-              collapseAll();
-              setCollapsed(prev => ({ ...prev, assumptions: false, blindSpots: false, risks: false }));
-            }}
-            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${viewMode === "skim"
+            onClick={handleSetSkimMode}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+              viewMode === "skim"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-stone-700 dark:text-stone-300 hover:bg-white dark:hover:bg-stone-700"
-              }`}
+            }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Quick Skim (2 min)</span>
           </button>
           <button
-            onClick={() => {
-              setViewMode("detailed");
-              expandAll();
-            }}
-            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${viewMode === "detailed"
+            onClick={handleSetDetailedMode}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+              viewMode === "detailed"
                 ? "bg-indigo-600 text-white shadow-xs"
                 : "text-stone-700 dark:text-stone-300 hover:bg-white dark:hover:bg-stone-700"
-              }`}
+            }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span>Full Deep-Dive</span>
           </button>
+          <span className="text-[11px] text-stone-500 dark:text-stone-400 italic hidden sm:inline ml-1">
+            {viewMode === "skim" ? "• Top 2 highlights shown per section" : "• All 8 sections & full breakdown open"}
+          </span>
         </div>
 
         {/* Expand / Collapse All */}
@@ -426,7 +449,7 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
           {!collapsed.assumptions && (
             <div className="px-6 pb-6 sm:px-7 sm:pb-7 space-y-3.5 pt-2 border-t border-indigo-100/60 dark:border-stone-800">
-              {analysis.assumptions?.map((item, idx) => (
+              {(viewMode === "skim" ? analysis.assumptions.slice(0, 2) : analysis.assumptions)?.map((item, idx) => (
                 <div
                   key={idx}
                   className="p-4 rounded-2xl glass-card-indigo shadow-xs"
@@ -437,12 +460,13 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
                     </h3>
                     {item.confidence && (
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shrink-0 ${item.confidence === "high"
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shrink-0 ${
+                          item.confidence === "high"
                             ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300"
                             : item.confidence === "medium"
                               ? "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300"
                               : "bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300"
-                          }`}
+                        }`}
                       >
                         {item.confidence === "high"
                           ? "Strong belief"
@@ -462,6 +486,16 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
                   </div>
                 </div>
               ))}
+
+              {viewMode === "skim" && analysis.assumptions.length > 2 && (
+                <button
+                  onClick={handleSetDetailedMode}
+                  className="w-full py-2.5 px-3 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Show {analysis.assumptions.length - 2} more assumption (Switch to Full Deep-Dive)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           )}
         </section>
@@ -498,7 +532,7 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
           {!collapsed.blindSpots && (
             <div className="px-6 pb-6 sm:px-7 sm:pb-7 grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-purple-100/60 dark:border-stone-800">
-              {analysis.blindSpots?.map((item, idx) => (
+              {(viewMode === "skim" ? analysis.blindSpots.slice(0, 2) : analysis.blindSpots)?.map((item, idx) => (
                 <div
                   key={idx}
                   className="p-4 rounded-2xl glass-card-purple flex flex-col justify-between shadow-xs"
@@ -517,6 +551,18 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
                   </div>
                 </div>
               ))}
+
+              {viewMode === "skim" && analysis.blindSpots.length > 2 && (
+                <div className="md:col-span-2">
+                  <button
+                    onClick={handleSetDetailedMode}
+                    className="w-full py-2.5 px-3 rounded-xl border border-dashed border-purple-300 dark:border-purple-800 text-xs font-semibold text-purple-600 dark:text-purple-400 hover:bg-purple-50/60 dark:hover:bg-purple-950/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <span>Show {analysis.blindSpots.length - 2} more blind spot (Switch to Full Deep-Dive)</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </section>
@@ -553,7 +599,7 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
           {!collapsed.risks && (
             <div className="px-6 pb-6 sm:px-7 sm:pb-7 space-y-3.5 pt-2 border-t border-amber-100/60 dark:border-stone-800">
-              {analysis.risks?.map((item, idx) => (
+              {(viewMode === "skim" ? analysis.risks.slice(0, 2) : analysis.risks)?.map((item, idx) => (
                 <div
                   key={idx}
                   className="p-4 rounded-2xl glass-card-amber shadow-xs"
@@ -581,6 +627,16 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
                   </div>
                 </div>
               ))}
+
+              {viewMode === "skim" && analysis.risks.length > 2 && (
+                <button
+                  onClick={handleSetDetailedMode}
+                  className="w-full py-2.5 px-3 rounded-xl border border-dashed border-amber-300 dark:border-amber-800 text-xs font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50/60 dark:hover:bg-amber-950/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Show {analysis.risks.length - 2} more risk (Switch to Full Deep-Dive)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           )}
         </section>
