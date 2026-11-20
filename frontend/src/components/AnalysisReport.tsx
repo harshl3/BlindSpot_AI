@@ -16,14 +16,10 @@ import {
   CheckCircle2,
   Loader2,
   BookOpen,
-  Filter,
-  Grid,
-  Radar,
-  Layers
+  Filter
 } from "lucide-react";
 import type { BlindSpotAnalysis, DecisionInput } from "../types/decision";
 import { CognitiveRadarGraph } from "./CognitiveRadarGraph";
-import { DecisionMatrix2x2 } from "./DecisionMatrix2x2";
 
 interface AnalysisReportProps {
   analysis: BlindSpotAnalysis;
@@ -49,9 +45,6 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
 
   // Quick category filter for fast jumping
   const [activeCategory, setActiveCategory] = useState<string>("all");
-
-  // Visual Graph View: "matrix" (2x2 Risk vs Reversibility) vs "radar" (Balance Radar)
-  const [activeVisualTab, setActiveVisualTab] = useState<"matrix" | "radar">("matrix");
 
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
     assumptions: false,
@@ -338,47 +331,8 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({
         </div>
       </div>
 
-      {/* INTERACTIVE VISUAL MAPS: 2x2 Matrix & Radar Map */}
-      <div className="space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
-          <span className="text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Interactive Visual Tools</span>
-          </span>
-
-          {/* Toggle between 2x2 Matrix and Radar Graph */}
-          <div className="inline-flex p-1 rounded-2xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-xs self-start sm:self-auto">
-            <button
-              onClick={() => setActiveVisualTab("matrix")}
-              className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
-                activeVisualTab === "matrix"
-                  ? "bg-indigo-600 text-white shadow-xs"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
-              }`}
-            >
-              <Grid className="w-3.5 h-3.5" />
-              <span>2x2 Risk vs. Reversibility Matrix</span>
-            </button>
-            <button
-              onClick={() => setActiveVisualTab("radar")}
-              className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
-                activeVisualTab === "radar"
-                  ? "bg-indigo-600 text-white shadow-xs"
-                  : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
-              }`}
-            >
-              <Radar className="w-3.5 h-3.5" />
-              <span>Balance Radar</span>
-            </button>
-          </div>
-        </div>
-
-        {activeVisualTab === "matrix" ? (
-          <DecisionMatrix2x2 analysis={analysis} decisionInput={decisionInput} />
-        ) : (
-          <CognitiveRadarGraph analysis={analysis} decisionInput={decisionInput} />
-        )}
-      </div>
+      {/* COGNITIVE RADAR & TOPOLOGY GRAPH */}
+      <CognitiveRadarGraph analysis={analysis} decisionInput={decisionInput} />
 
       {/* QUICK TOPIC FILTER PILLS */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-2 no-scrollbar text-xs">
