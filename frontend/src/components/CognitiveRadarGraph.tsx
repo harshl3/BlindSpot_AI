@@ -45,39 +45,39 @@ export const CognitiveRadarGraph: React.FC<CognitiveRadarGraphProps> = ({
 
   const dimensions = [
     {
-      name: "Untested Assumptions",
+      name: "Untested Guesses",
       score: assumptionFragility,
-      description: "How much of your plan relies on unverified guesses or best-case hopes.",
+      description: "How much of your plan relies on unverified hopes vs proven facts.",
       color: "#6366f1", // Indigo
-      label: `${assumptionFragility}% Fragility`
+      label: assumptionFragility > 65 ? "Needs Checking" : "Fairly Solid"
     },
     {
-      name: "Potential Downside",
+      name: "Downside Risk",
       score: downsideExposure,
-      description: "The seriousness of possible risks, complications, or failure modes.",
+      description: "How serious the downsides or setbacks would be if things don't go to plan.",
       color: "#f59e0b", // Amber
-      label: `${downsideExposure}% Risk Focus`
+      label: downsideExposure > 65 ? "High Risk" : "Manageable"
     },
     {
-      name: "Hard to Reverse",
+      name: "Commitment / Hard to Undo",
       score: reversibilityRisk,
-      description: "How difficult or costly it would be to undo this choice if things don't work out.",
+      description: "How hard or costly it is to change your mind once you start.",
       color: "#ec4899", // Pink
-      label: `${reversibilityRisk}% Commitment`
+      label: reversibilityRisk > 60 ? "Hard to Reverse" : "Easy to Adjust"
     },
     {
-      name: "Solid Evidence",
+      name: "Verified Facts",
       score: evidenceSolidity,
-      description: "How much real-world data and verified facts back up your preferred option.",
+      description: "How much concrete, real-world information backs up your choice.",
       color: "#10b981", // Emerald
-      label: `${evidenceSolidity}% Verified`
+      label: evidenceSolidity > 60 ? "Well Supported" : "More Info Needed"
     },
     {
-      name: "Diverse Viewpoints",
+      name: "Different Angles",
       score: perspectiveBreadth,
-      description: "How many different team, customer, and stakeholder angles have been considered.",
+      description: "How many other viewpoints or outside opinions you have considered.",
       color: "#8b5cf6", // Purple
-      label: `${perspectiveBreadth}% Multi-Angle`
+      label: perspectiveBreadth > 60 ? "Broad View" : "Narrow Focus"
     }
   ];
 
@@ -111,20 +111,23 @@ export const CognitiveRadarGraph: React.FC<CognitiveRadarGraphProps> = ({
   const cognitiveTraps = [
     {
       name: "Over-Optimism (Best-Case Thinking)",
+      level: assumptionFragility > 65 ? "High Caution" : "Watch Out",
       percentage: Math.min(85, assumptionFragility + 6),
       impact: "Assuming things will go smoothly while underestimating setup time and hiccups",
       color: "from-indigo-500 to-purple-500"
     },
     {
       name: "Rushing to Act (Action Bias)",
+      level: downsideExposure > 65 ? "High Caution" : "Watch Out",
       percentage: Math.min(90, downsideExposure - 4),
-      impact: "Urge to finalize quickly before verifying key facts or asking hard questions",
+      impact: "Urge to finalize quickly before checking key facts or asking hard questions",
       color: "from-amber-500 to-orange-500"
     },
     {
-      name: "Confirmation Bias (Cherry-Picking)",
+      name: "Cherry-Picking (Confirmation Bias)",
+      level: evidenceSolidity < 55 ? "High Caution" : "Moderate",
       percentage: Math.min(75, 100 - evidenceSolidity),
-      impact: "Giving extra weight to signals that confirm what you already wanted to believe",
+      impact: "Giving extra weight to signs that confirm what you already wanted to believe",
       color: "from-purple-500 to-pink-500"
     }
   ];
@@ -338,13 +341,17 @@ export const CognitiveRadarGraph: React.FC<CognitiveRadarGraphProps> = ({
               >
                 <div className="flex items-center justify-between text-xs font-bold">
                   <span className="text-stone-900 dark:text-white">{trap.name}</span>
-                  <span className="text-stone-600 dark:text-stone-300 font-mono text-[11px] bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-full">
-                    {trap.percentage}% tendency
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                    trap.level === "High Caution"
+                      ? "bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800"
+                      : "bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+                  }`}>
+                    {trap.level}
                   </span>
                 </div>
 
                 {/* Animated Progress Bar */}
-                <div className="w-full h-2 rounded-full bg-stone-200 dark:bg-stone-800 overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-stone-200 dark:bg-stone-800 overflow-hidden">
                   <div
                     className={`h-full rounded-full bg-gradient-to-r ${trap.color} transition-all duration-700`}
                     style={{ width: `${trap.percentage}%` }}
@@ -359,10 +366,10 @@ export const CognitiveRadarGraph: React.FC<CognitiveRadarGraphProps> = ({
           </div>
 
           {/* Quick takeaway chip */}
-          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-indigo-500/10 border border-amber-500/20 text-xs text-stone-700 dark:text-stone-300 flex items-center gap-2">
+          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-indigo-500/10 border border-amber-500/25 text-xs text-stone-700 dark:text-stone-300 flex items-center gap-2.5">
             <ChevronRight className="w-4 h-4 text-amber-500 shrink-0" />
             <span>
-              <strong>Key Takeaway:</strong> Testing your main assumption before committing will save you time and cut risk by ~{Math.round(assumptionFragility * 0.7)}%.
+              <strong>Quick Tip:</strong> Checking your main guess before jumping in will save you unexpected stress and wasted effort.
             </span>
           </div>
 

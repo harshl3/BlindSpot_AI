@@ -109,7 +109,7 @@ export const ChallengeThinkingModal: React.FC<ChallengeThinkingModalProps> = ({
             <div className="space-y-3.5">
               <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/60">
                 <span className="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider block mb-1">
-                  Strongest Counterargument
+                  Main Counterpoint
                 </span>
                 <p className="text-sm sm:text-base font-bold text-stone-900 dark:text-white leading-relaxed">
                   {challengeResult.counterargument}
@@ -118,7 +118,7 @@ export const ChallengeThinkingModal: React.FC<ChallengeThinkingModalProps> = ({
 
               <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
                 <span className="text-[11px] font-bold text-indigo-700 dark:text-indigo-400 uppercase tracking-wider block mb-1">
-                  Fragile Premise Most Worth Questioning
+                  Biggest Assumption to Question
                 </span>
                 <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
                   {challengeResult.vulnerableAssumption}
@@ -127,7 +127,7 @@ export const ChallengeThinkingModal: React.FC<ChallengeThinkingModalProps> = ({
 
               <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
                 <span className="text-[11px] font-bold text-stone-600 dark:text-stone-400 uppercase tracking-wider block mb-1">
-                  Alternative Interpretation of Same Facts
+                  Another Way to Look at This
                 </span>
                 <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
                   {challengeResult.alternativeInterpretation}
@@ -136,7 +136,7 @@ export const ChallengeThinkingModal: React.FC<ChallengeThinkingModalProps> = ({
 
               <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
                 <span className="text-[11px] font-bold text-purple-800 dark:text-purple-400 uppercase tracking-wider block mb-1">
-                  Second-Order Consequence (6–18 Months)
+                  Surprise Headache Down the Road
                 </span>
                 <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
                   {challengeResult.secondOrderConsequence}
@@ -146,7 +146,7 @@ export const ChallengeThinkingModal: React.FC<ChallengeThinkingModalProps> = ({
               {challengeResult.challengingQuestions?.length > 0 && (
                 <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/60">
                   <span className="text-[11px] font-bold text-indigo-900 dark:text-indigo-300 uppercase tracking-wider block mb-2">
-                    Questions You Must Answer Before Proceeding
+                    Key Questions to Answer First
                   </span>
                   <ul className="space-y-1.5 text-xs sm:text-sm text-stone-800 dark:text-stone-200 list-disc list-inside">
                     {challengeResult.challengingQuestions.map((q, i) => (

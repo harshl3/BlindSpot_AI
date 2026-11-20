@@ -158,7 +158,7 @@ export const PremortemModal: React.FC<PremortemModalProps> = ({
             <div className="space-y-4 animate-in fade-in duration-200">
               <div className="p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/60">
                 <span className="text-[11px] font-bold text-amber-900 dark:text-amber-400 uppercase tracking-wider block mb-1">
-                  Hypothetical Failure Scenario ({timeHorizon} Future)
+                  What Could Go Wrong Scenario ({timeHorizon} Future)
                 </span>
                 <p className="text-xs sm:text-sm text-stone-800 dark:text-stone-200 leading-relaxed font-semibold">
                   {premortemResult.failureScenario}
@@ -167,7 +167,7 @@ export const PremortemModal: React.FC<PremortemModalProps> = ({
 
               <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
                 <span className="text-[11px] font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider block mb-1.5">
-                  Contributing Root Causes
+                  Most Likely Causes
                 </span>
                 <ul className="space-y-1 text-xs sm:text-sm text-stone-700 dark:text-stone-300 list-disc list-inside">
                   {premortemResult.plausibleContributingFactors?.map((f, i) => (
@@ -178,7 +178,7 @@ export const PremortemModal: React.FC<PremortemModalProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div className="p-3.5 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60">
-                  <span className="font-bold text-indigo-900 dark:text-indigo-300 block mb-1">Preventive Questions</span>
+                  <span className="font-bold text-indigo-900 dark:text-indigo-300 block mb-1">Questions to Catch Trouble Early</span>
                   <ul className="space-y-1 text-stone-700 dark:text-stone-300 list-disc list-inside">
                     {premortemResult.preventiveQuestions?.map((q, i) => (
                       <li key={i}>{q}</li>
@@ -186,7 +186,7 @@ export const PremortemModal: React.FC<PremortemModalProps> = ({
                   </ul>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60">
-                  <span className="font-bold text-emerald-950 dark:text-emerald-300 block mb-1">Risk Reduction Actions</span>
+                  <span className="font-bold text-emerald-950 dark:text-emerald-300 block mb-1">Simple Safeguards to Put in Place</span>
                   <ul className="space-y-1 text-stone-700 dark:text-stone-300 list-disc list-inside">
                     {premortemResult.riskReductionActions?.map((a, i) => (
                       <li key={i}>{a}</li>

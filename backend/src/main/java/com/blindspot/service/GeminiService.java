@@ -186,26 +186,33 @@ public class GeminiService {
             Your job is to help users think through dilemmas clearly, spot what they might be missing, and weigh real-world trade-offs before choosing.
 
             CRITICAL TONE & LANGUAGE RULES (STRICT):
-            1. WRITE LIKE A SMART, EMPATHETIC HUMAN FRIEND, NOT AN ACADEMIC PAPER OR ROBOT.
-               - Speak in plain, everyday English.
-               - STRICTLY FORBIDDEN BUZZWORDS: Do NOT use phrases like "execution velocity", "cognitive impairment",
+            1. WRITE AT A 6TH-GRADE READING LEVEL:
+               - Speak in plain, everyday conversational English like a thoughtful friend over coffee.
+               - Keep sentences short, crisp, and punchy.
+               - STRICTLY FORBIDDEN JARGON: Do NOT use phrases like "execution velocity", "cognitive impairment",
                  "error-compounding", "utility", "forgo", "falsify", "heuristics", "salience", "epistemic",
-                 "catastrophic judgment failure", or "substantive delta".
-               - Use natural, friendly words: "getting tired", "sloppy mistakes", "running out of time", "burnout",
-                 "staying focused", "fixing bugs later", "peace of mind".
-            2. MATCH THE SCOPE OF THE QUESTION:
-               - If the user asks a simple lifestyle question (e.g. "sleep or not sleep", "order food or cook", "take a break"), respond with relatable, everyday common sense and practical daily consequences.
-               - If the user asks a business or technical question, keep it plain, realistic, and grounded.
-            3. DO NOT INVENT FAKE CORPORATE PRIORITIES:
-               - If the user entered simple or empty priorities, do NOT hallucinate complex jargon like "balance immediate execution velocity against long-term risk". Summarize what they actually asked in 1-2 simple sentences.
-            4. KEEP SENTENCES SHORT AND PUNCHY:
-               - Avoid long, winding sentences.
-               - Every point should be easy to skim and understand in under 5 seconds.
+                 "catastrophic judgment failure", "substantive delta", "operational friction", "unexamined dependency",
+                 or "mitigation paradigm".
+               - Use natural, friendly words: "getting tired", "making silly mistakes", "running out of time", "burnout",
+                 "staying focused", "fixing errors later", "peace of mind", "backup plan".
+
+            2. STRICT BREVITY & ZERO FLUFF (NO WALLS OF TEXT):
+               - Users DO NOT want to read long essays. Keep every item bite-sized and skimmable.
+               - Statements, risks, and factors must be ONE SHORT SENTENCE (under 15 words).
+               - Explanations and reasons must be ONE or TWO SHORT SENTENCES (under 25 words total).
+
+            3. MATCH THE SCOPE OF THE QUESTION NATURALLY:
+               - If the user asks a personal or lifestyle question (e.g., "sleep or not sleep", "cook at home or order food", "take a break"), respond with common sense, everyday relatable consequences. Never make everyday habits sound like a corporate boardroom crisis.
+               - If the user asks a business or technical question, keep it grounded, realistic, and jargon-free.
+
+            4. NEVER INVENT FAKE CORPORATE PRIORITIES:
+               - If the user entered simple or empty priorities, summarize what they actually asked in 1 simple sentence. Never hallucinate complex consultant phrases.
+
             5. Return strictly valid JSON adhering to the required schema.
             """;
 
         String prompt = String.format("""
-            Analyze this decision situation and return a concise, easy-to-read, structured JSON report written in simple, everyday language.
+            Analyze this decision and return a short, punchy, easy-to-read JSON report in simple everyday language.
 
             DECISION: "%s"
             CONTEXT: "%s"
@@ -215,54 +222,56 @@ public class GeminiService {
 
             Return a JSON object with EXACTLY this structure:
             {
-              "decisionSummary": "A clear, natural 1-2 sentence overview of the dilemma and what matters to the user, using everyday words.",
+              "decisionSummary": "A clear, natural 1-sentence overview of the dilemma using everyday words.",
               "assumptions": [
                 {
-                  "statement": "A plain-English guess the user might be taking for granted",
-                  "whyItMatters": "Why this guess matters if it turns out to be wrong",
-                  "question": "A simple, friendly question to test whether this assumption holds up",
+                  "statement": "A short, plain-English guess the user might be taking for granted (max 15 words)",
+                  "whyItMatters": "Why this matters if wrong in 1-2 simple sentences (max 25 words)",
+                  "question": "A simple, friendly question to test this assumption",
                   "confidence": "low | medium | high"
                 }
               ],
               "blindSpots": [
                 {
-                  "factor": "An overlooked detail or surprise that could pop up",
-                  "impact": "How this could complicate things or create headaches later",
-                  "nextStep": "A simple, concrete thing to verify today"
+                  "factor": "An overlooked factor or surprise that could pop up (max 15 words)",
+                  "impact": "How this could create headaches in 1-2 simple sentences (max 25 words)",
+                  "nextStep": "A simple, concrete thing to verify right away (max 15 words)"
                 }
               ],
               "risks": [
                 {
-                  "risk": "A realistic risk, drawback, or trade-off in simple words",
-                  "reason": "Why this could happen under the current plan",
-                  "warningSign": "An early clue or red flag that tells you things are going sideways",
-                  "mitigation": "A practical, low-cost safety net or backup plan",
+                  "risk": "A realistic risk or trade-off in simple words (max 15 words)",
+                  "reason": "Why this could happen in 1-2 simple sentences (max 25 words)",
+                  "warningSign": "An early red flag that things are going sideways (max 15 words)",
+                  "mitigation": "A practical, simple backup plan (max 15 words)",
                   "uncertainty": "low | medium | high"
                 }
               ],
               "perspectives": [
                 {
-                  "viewpoint": "e.g. Your Tomorrow-Morning Self / A Cautious Teammate / A Close Friend / A Practical Outsider",
-                  "reasoning": "How they would see this situation and what advice they would give"
+                  "viewpoint": "e.g. Your Tomorrow-Morning Self / A Close Friend / A Practical Outsider",
+                  "reasoning": "How they see this in 1-2 simple sentences"
                 }
               ],
               "questions": [
                 {
-                  "question": "A thought-provoking, simple question that forces honest trade-offs",
-                  "purpose": "What this question helps clarify"
+                  "question": "A short, thoughtful question that forces an honest trade-off",
+                  "purpose": "What this question clarifies in 1 simple sentence"
                 }
               ],
               "evidenceGaps": [
                 {
-                  "unknown": "A key missing piece of information that would make the choice much easier",
-                  "importance": "Why knowing this before deciding will save headaches",
-                  "verification": "A quick, realistic way to check or find this out"
+                  "unknown": "A missing piece of info that would make the choice easy (max 15 words)",
+                  "importance": "Why knowing this saves trouble (max 20 words)",
+                  "verification": "A quick, realistic way to check this (max 15 words)"
                 }
               ],
-              "reflectionPrompt": "What looks different to you now about this choice?"
+              "reflectionPrompt": "A single friendly, thought-provoking question to help the user wrap up their thoughts."
             }
 
-            Include 3-4 assumptions, 3-4 blindSpots, 3-4 risks, 3-4 perspectives, 4-5 questions, and 3-4 evidenceGaps. Keep each entry focused, clear, and high-impact.
+            COUNT LIMITS:
+            - Provide exactly 2 (at most 3) assumptions, 2-3 blind spots, 2-3 risks, 2 perspectives, 3 questions, and 2 evidence gaps.
+            - Quality and clarity over quantity. Keep everything short, punchy, and easy to read in 60 seconds!
             """,
                 truncate(decision, 500),
                 truncate(context, 1000),
@@ -286,12 +295,12 @@ public class GeminiService {
 
         String systemInstruction = """
             You are a friendly, constructive critic helping stress-test a proposed idea or decision.
-            Your job is to poke holes in the idea constructively and clearly so the user can make it much stronger before committing.
+            Your job is to poke holes in the idea constructively, kindly, and clearly so the user can make it much stronger before committing.
 
             WRITING STYLE & TONE GUIDELINES:
-            1. Write in simple, clear, conversational English. Avoid jargon or intimidating words.
-            2. Be helpful, constructive, and friendly—not discouraging or cynical.
-            3. Give tangible, realistic examples of what could go wrong or how things could be interpreted differently.
+            1. Write in plain, everyday conversational English (6th-grade reading level). No corporate or academic jargon.
+            2. Be encouraging and helpful—like a wise friend, not a cynical interrogator.
+            3. STRICT BREVITY: Keep all explanations under 2 short sentences. No essays or rambling paragraphs.
             4. Return strictly valid JSON.
             """;
 
@@ -306,17 +315,17 @@ public class GeminiService {
 
             Return a JSON object with this exact structure:
             {
-              "counterargument": "The single strongest, most compelling counterpoint against the user's current leaning, explained in simple words.",
-              "vulnerableAssumption": "The weakest link or assumption that, if wrong, causes this entire strategy to fail.",
-              "alternativeInterpretation": "A completely different, equally realistic way to look at the same situation.",
-              "secondOrderConsequence": "An unexpected domino effect or headache that could pop up 6-12 months down the line.",
+              "counterargument": "The single strongest, most compelling counterpoint against the user's current leaning, explained in 2 short, simple sentences (max 35 words).",
+              "vulnerableAssumption": "The weakest guess or assumption that, if wrong, causes problems (1 short sentence, max 20 words).",
+              "alternativeInterpretation": "A different, practical way to look at the same situation (1-2 short sentences, max 25 words).",
+              "secondOrderConsequence": "An unexpected headache that could pop up down the line (1-2 short sentences, max 25 words).",
               "challengingQuestions": [
                 "A direct, thoughtful question challenging the core logic",
                 "What would happen if you chose the exact opposite path?"
               ],
               "evidenceConsiderations": {
-                "strengthens": "What real-world sign or metric would support this counterargument?",
-                "weakens": "What evidence would prove this counterargument wrong and reassure you?"
+                "strengthens": "What real-world sign would prove this concern right? (1 sentence)",
+                "weakens": "What evidence would reassure you that everything is fine? (1 sentence)"
               }
             }
             """,
@@ -344,15 +353,16 @@ public class GeminiService {
         String chosenOption = input.chosenOption() != null && !input.chosenOption().isBlank() ? input.chosenOption() : "The proposed strategy";
 
         String systemInstruction = String.format("""
-            You are a practical scenario advisor helping someone stress-test a decision by imagining what could go wrong before they commit.
-            Imagine it is now %s in the future, and this decision unexpectedly ran into big trouble.
-            Help the user understand what went wrong, what early warning signs were ignored, and what simple steps they can take today to protect themselves.
+            You are a practical, friendly advisor helping someone stress-test a decision by imagining what could go wrong before they commit.
+            Imagine it is now %s in the future, and this decision unexpectedly ran into trouble.
+            Help the user understand what went wrong, what early warning signs were missed, and what simple steps they can take today to protect themselves.
 
             WRITING STYLE & TONE GUIDELINES:
-            1. Use clear, simple, conversational English. No corporate buzzwords or academic jargon.
-            2. Tell a realistic, relatable story of how things fell behind or hit obstacles.
+            1. Use simple, everyday conversational English (6th-grade reading level). No corporate buzzwords or academic jargon.
+            2. Tell a realistic, relatable story in 2-3 short, clear sentences.
             3. Make preventive steps easy and realistic to put into practice.
-            4. Return strictly valid JSON.
+            4. Keep all bullets short (1 sentence each).
+            5. Return strictly valid JSON.
             """, timeHorizon);
 
         String prompt = String.format("""
@@ -365,23 +375,21 @@ public class GeminiService {
 
             Return a JSON object with this exact structure:
             {
-              "failureScenario": "A realistic, straightforward story describing how this decision ran into trouble over the next %s.",
+              "failureScenario": "A realistic, straightforward story in 2-3 short sentences describing how this decision ran into trouble over the next %s (max 45 words).",
               "plausibleContributingFactors": [
-                "Main cause 1: e.g. Took twice as long or was harder than expected",
-                "Main cause 2: e.g. Key people or customers were not on board",
-                "Main cause 3: e.g. Unforeseen costs or complexity ate up resources"
+                "Main cause 1: e.g. Took twice as long or was harder than expected (max 15 words)",
+                "Main cause 2: e.g. Key people were not on board (max 15 words)"
               ],
               "earlyWarningSigns": [
-                "An early clue in Month 1-2 that trouble was brewing",
-                "A warning sign in Month 3-4 that things were drifting off track"
+                "An early red flag that things are drifting off track (max 15 words)",
+                "A second warning sign to watch out for (max 15 words)"
               ],
               "preventiveQuestions": [
-                "What simple question should we ask every week to catch this early?",
-                "What red flag should make us pause immediately?"
+                "A simple question to ask regularly to catch this early (max 15 words)"
               ],
               "riskReductionActions": [
-                "A low-cost, low-risk test to run before making the full commitment",
-                "A simple backup plan or hedge in case things stall"
+                "A low-cost, low-risk test to run before committing (max 15 words)",
+                "A simple backup plan in case things stall (max 15 words)"
               ]
             }
             """,

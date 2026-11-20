@@ -20,36 +20,36 @@ const REFLECTION_OPTIONS: { id: ReflectionState; label: string; description: str
   {
     id: "thinking_changed",
     label: "My thinking changed",
-    description: "The analysis exposed blind spots that led me to rethink my direction.",
+    description: "I noticed blind spots that made me rethink my choice.",
     icon: "🔄"
   },
   {
     id: "thinking_strengthened",
-    label: "My thinking became stronger",
-    description: "Seeing counterarguments clarified my reasoning and confirmed priorities.",
+    label: "I feel more confident",
+    description: "Looking at the risks helped clarify why this is still the right move.",
     icon: "🛡️"
   },
   {
     id: "need_more_info",
-    label: "I need more information",
-    description: "The evidence gaps are too significant to commit without validation.",
+    label: "I need to check a few facts first",
+    description: "There are important unknowns I should verify before deciding.",
     icon: "🔍"
   },
   {
     id: "still_uncertain",
-    label: "I'm still uncertain",
-    description: "The trade-offs remain genuine and require further incubation or testing.",
+    label: "I'm still weighing trade-offs",
+    description: "The options are close, and I need a bit more time to sleep on it.",
     icon: "⚖️"
   }
 ];
 
 const EXAMINED_CHECKLIST = [
-  { id: "assumptions", label: "Hidden assumptions surfaced and probed" },
-  { id: "blindspots", label: "Unseen variables and dependencies identified" },
-  { id: "risks", label: "Plausible failure modes and mitigations weighed" },
-  { id: "perspectives", label: "Alternative stakeholder viewpoints reviewed" },
-  { id: "questions", label: "Trade-off uncovering questions contemplated" },
-  { id: "evidenceGaps", label: "Critical unknowns and verification steps noted" }
+  { id: "assumptions", label: "Checked what I might be taking for granted" },
+  { id: "blindspots", label: "Found surprises or details I wasn't noticing" },
+  { id: "risks", label: "Weighed the main risks and backup plans" },
+  { id: "perspectives", label: "Looked at other people's perspectives" },
+  { id: "questions", label: "Answered the hard trade-off questions" },
+  { id: "evidenceGaps", label: "Noted what missing facts to check first" }
 ];
 
 export const ReflectionSection: React.FC<ReflectionSectionProps> = ({
